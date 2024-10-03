@@ -1,73 +1,55 @@
 package com.example.statemanagmentextended;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
-import androidx.lifecycle.ViewModel;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String KEY_COUNT = "count";
+    private static final String KEY_TEXT = "text";
+    private static final String KEY_CHECKBOX = "checkbox";
+    private static final String KEY_SWITCH = "switch";
+    private TextView textViewCount;
     private int counter = 0;
     private String text = "";
-    private boolean isChecked = false;
-    private boolean isSwitchOn = false;
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-    }
-
-    public boolean isSwitchOn() {
-        return isSwitchOn;
-    }
-
-    public void setSwitchOn(boolean switchOn) {
-        isSwitchOn = switchOn;
-    }
-
-    private static final String KEY_COUNT = "count"; // Klucz do przechowywania danych w
-    private TextView textViewCount; // Element widoku do wyświetlania liczby
-    private int count = 0; // Zmienna do przechowywania wartości licznika
+    private Boolean checkbox = false;
+    private Boolean switchTheme = false;
+    private EditText editText;
+    private CheckBox checkBox;
+    private Switch SwitchTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textViewCount = findViewById(R.id.textViewCount); // Inicjalizacja TextView
-        Button buttonIncrement = findViewById(R.id.buttonIncrement); // Inicjalizacja
+        textViewCount = findViewById(R.id.textViewCount);
+        editText = findViewById(R.id.edit_text_id);
+        checkBox = findViewById(R.id.checkbox);
+        SwitchTheme = findViewById(R.id.switchTheme);
+        Button buttonIncrement = findViewById(R.id.buttonIncrement);
+        text = String.valueOf(editText);
+        checkbox = Boolean.valueOf(checkbox);
+        switchTheme = Boolean.valueOf(String.valueOf(SwitchTheme));
 
-        // Odczyt danych ze stanu, jeśli istnieje
         if (savedInstanceState != null) {
-            count = savedInstanceState.getInt(KEY_COUNT); // Przywróć wartość licznika
+            counter = savedInstanceState.getInt(KEY_COUNT);
+            text = savedInstanceState.getString(KEY_TEXT);
+            checkbox = savedInstanceState.getBoolean(KEY_CHECKBOX);
+            switchTheme = savedInstanceState.getBoolean(KEY_SWITCH);
         }
-        updateCountText(); // Aktualizuj widok TextView
-        // Ustawienie akcji kliknięcia przycisku
+        updateCountText();
         buttonIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++; // Zwiększ wartość licznika
-                updateCountText(); // Aktualizuj widok TextView
+                counter++;
+                updateCountText();
             }
         });
     }
@@ -75,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_COUNT, count); // Zapisz aktualny stan licznika do Bundle
+        outState.putInt(KEY_COUNT, counter);
+        outState.putString(KEY_TEXT, text);
+        outState.putBoolean(KEY_CHECKBOX, checkbox);
+        outState.putBoolean(KEY_CHECKBOX, switchTheme);
     }
 
     private void updateCountText() {
-        textViewCount.setText("Licznik: " + count); // Ustaw tekst TextView na aktualn
+        textViewCount.setText("Licznik: " + counter);
     }
 }
