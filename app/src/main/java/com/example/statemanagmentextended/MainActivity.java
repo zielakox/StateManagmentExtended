@@ -1,11 +1,13 @@
 package com.example.statemanagmentextended;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,11 +21,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewCount;
     private int counter = 0;
     private String text = "";
+    private String textCheck = "";
     private Boolean checkbox = false;
     private Boolean switchTheme = false;
     private EditText editText;
     private CheckBox checkBox;
     private Switch SwitchTheme;
+    private TextView textCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +36,9 @@ public class MainActivity extends AppCompatActivity {
         textViewCount = findViewById(R.id.textViewCount);
         editText = findViewById(R.id.edit_text_id);
         checkBox = findViewById(R.id.checkbox);
+        textCheckBox = findViewById(R.id.textCheckBox);
         SwitchTheme = findViewById(R.id.switchTheme);
         Button buttonIncrement = findViewById(R.id.buttonIncrement);
-        text = String.valueOf(editText);
-        checkbox = Boolean.valueOf(checkbox);
-        switchTheme = Boolean.valueOf(String.valueOf(SwitchTheme));
 
         if (savedInstanceState != null) {
             counter = savedInstanceState.getInt(KEY_COUNT);
@@ -52,6 +54,34 @@ public class MainActivity extends AppCompatActivity {
                 updateCountText();
             }
         });
+            SwitchTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(SwitchTheme.isChecked())
+                    {
+                        switchTheme = true;
+                    }
+                    else
+                    {
+                        switchTheme = false;
+                    }
+                    updateSwitchTheme();
+                }
+            });
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(checkBox.isChecked())
+                    {
+                        checkbox = true;
+                    }
+                    else
+                    {
+                        checkbox = false;
+                    }
+                    updateCheckBox();
+                }
+            });
     }
 
     @Override
@@ -63,7 +93,23 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean(KEY_CHECKBOX, switchTheme);
     }
 
-    private void updateCountText() {
+
+
+    public void updateCountText() {
         textViewCount.setText("Licznik: " + counter);
+    }
+    public void updateSwitchTheme() {
+        if(switchTheme){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+    public void updateCheckBox() {
+        if(checkbox) {
+            textCheckBox.setText("Witam:)");
+        }else{
+            textCheckBox.setText("");
+        }
     }
 }

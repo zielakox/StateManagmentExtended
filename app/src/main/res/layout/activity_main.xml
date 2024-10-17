@@ -23,11 +23,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Napisz coś"/>
+    <CheckBox
+        android:id="@+id/checkbox_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/textCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text=""/>
+
 
     <Switch
         android:id="@+id/switchTheme"
