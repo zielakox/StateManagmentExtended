@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewCount;
     private int counter = 0;
     private String text = "";
-    private String textCheck = "";
     private Boolean checkbox = false;
     private Boolean switchTheme = false;
     private EditText editText;
@@ -46,12 +47,31 @@ public class MainActivity extends AppCompatActivity {
             checkbox = savedInstanceState.getBoolean(KEY_CHECKBOX);
             switchTheme = savedInstanceState.getBoolean(KEY_SWITCH);
         }
+        updateEditText();
         updateCountText();
+
+
         buttonIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 counter++;
                 updateCountText();
+            }
+        });
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                    text = editText.getText().toString();
             }
         });
             SwitchTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -87,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        text = editText.toString();
         outState.putInt(KEY_COUNT, counter);
         outState.putString(KEY_TEXT, text);
         outState.putBoolean(KEY_CHECKBOX, checkbox);
@@ -111,5 +132,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             textCheckBox.setText("");
         }
+    }
+    public void updateEditText() {
+        editText.setText(text);
     }
 }
